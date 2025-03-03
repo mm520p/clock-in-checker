@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock-In Checker</title>
+    <link rel="stylesheet" href="style.css">
+    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.3/purify.min.js" integrity="sha512-Ll+TuDvrWDNNRnFFIM8dOiw7Go7dsHyxRp4RutiIFW/wm3DgDmCnRZow6AqbXnCbpWu93yM1O34q+4ggzGeXVA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <input type="file" id="upload" accept=".xls,.xlsx">
+    <label>名稱:<input type="select" list="people" id="name"></label>
+    <datalist id="people"></datalist>
+    <button id="search" disabled>查詢</button>
+    <br/>
+    <br/>
+    <table id="result">
+        <thead>
+            <tr>
+                <th>日期</th>
+                <th>上班</th>
+                <th>下班</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="main.js"></script>
+</body>
+
+</html>

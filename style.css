@@ -1,0 +1,36 @@
+body {
+    text-align: center;
+}
+
+#result {
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    table-layout: fixed;
+}
+
+#result td {
+    border: 1px solid black;
+}
+
+.text-danger {
+    color: red;
+    font-weight: bold;
+}
+
+.text-warning {
+    color: orange;
+    font-weight: bold;
+}
+
+.text-success {
+    color: green;
+    font-weight: bold;
+}
+
+.text-secondary {
+    color: gray;
+}
