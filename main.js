@@ -8,6 +8,7 @@ const dates = {};
 const names = {};
 const checkinTime = new Date("1995-12-17 " + "08:00:00");
 const checkoutTime = new Date("1995-12-17 " + "17:30:00");
+const earliestCheckoutTime = new Date("1995-12-17 " + "17:00:00");
 
 uploadInput.addEventListener("change", () => {
     searchBtn.disabled = true;
@@ -33,14 +34,18 @@ searchBtn.addEventListener("click", () => {
             if (row["名稱"] === name) {
                 isCome = true;
                 if (!checkinStatus[date][0]) {
-                    if (row["時間"] <= checkinTime) {
+                    if (row["時間2"] <= checkinTime) {
                         checkinStatus[date][0] = "上班打卡成功";
                     } else {
                         checkinStatus[date][0] = "遲到";
+                        checkinStatus[date][2] = row["時間"];
                     }
                 }
-                if (row["時間"] < checkoutTime) {
+                if (row["時間2"] < checkoutTime) {
                     checkinStatus[date][1] = "早退";
+                    if (row["時間2"] >= earliestCheckoutTime) {
+                        checkinStatus[date][3] = row["時間"];
+                    }
                 } else {
                     checkinStatus[date][1] = "下班打卡成功";
                 }
@@ -52,8 +57,10 @@ searchBtn.addEventListener("click", () => {
         }
     }
     resultBody.innerHTML = Object.entries(checkinStatus).map(([date, status]) => {
-        const statusText1 = `<td class="${getColor(status[0])}">${DOMPurify.sanitize(status[0])}</td>`;
-        const statusText2 = `<td class="${getColor(status[1])}">${DOMPurify.sanitize(status[1])}</td>`;
+        const timeText1 = status[0] === "遲到" && status[2] ? "/" + status[2] : "";
+        const timeText2 = status[1] === "早退" && status[3] ? "/" + status[3] : "";
+        const statusText1 = `<td class="${getColor(status[0])}">${DOMPurify.sanitize(status[0] + timeText1)}</td>`;
+        const statusText2 = `<td class="${getColor(status[1])}">${DOMPurify.sanitize(status[1] + timeText2)}</td>`;
         return `<tr><td>${DOMPurify.sanitize(date)}</td>${statusText1}${statusText2}</tr>`;
     }).join("\n");
 });
@@ -85,7 +92,7 @@ function parseData(file) {
             dates[date] = [];
         } else {
             row["日期"] = date;
-            row["時間"] = new Date("1995-12-17 " + row["時間"]);
+            row["時間2"] = new Date("1995-12-17 " + row["時間"]);
             dates[date].push(row);
             if (row["名稱"] !== "" && row["名稱"] !== "supervisor") {
                 names[row["名稱"]] = true;
